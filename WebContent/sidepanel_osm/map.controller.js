@@ -1,4 +1,4 @@
-sap.ui.controller("sidepanel_openstreetmap_hcm.map", {
+sap.ui.controller("sidepanel_osm.map", {
 
 	onInit: function () {
 		 
@@ -7,7 +7,6 @@ sap.ui.controller("sidepanel_openstreetmap_hcm.map", {
 		 var lat;
 		 var lon;
 		 
-		 	
 		  window.oGeoMap = this.getView().byId("GeoMap");
 		  window.oMapConfig = {
 			        "MapProvider": [{
@@ -104,7 +103,7 @@ sap.ui.controller("sidepanel_openstreetmap_hcm.map", {
 	        dataContext = (typeof(window.external) !== "undefined") && (typeof(window.external.DataContext) !== "undefined") ?
 	       window.external.DataContext : null;
 	        
-	        if (dataContext !== null && typeof(dataContext) !=="undefined")
+	        if (dataContext !== null && typeof(dataContext) !== "undefined")
 	           { window.external.epcm.subscribeEventReliable("com.sap.lsapi.dataContext", "changedWithXML", undefined, "onChangedWithXML");
 	        }; 
 	        	        
