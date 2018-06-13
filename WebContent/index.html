@@ -4,7 +4,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
 
-		<script src="resources/sap-ui-core.js"
+		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
 				id="sap-ui-bootstrap"
 				data-sap-ui-libs="sap.m, sap.viz, sap.ui.vbm"
 				data-sap-ui-theme="sap_belize">
@@ -12,9 +12,9 @@
 		<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
 
 		<script>
-				sap.ui.localResources("sidepanel_openstreetmap_hcm");
+				sap.ui.localResources("sidepanel_osm");
 				var app = new sap.m.App({initialPage:"idmap1"});
-				var page = sap.ui.view({id:"idmap1", viewName:"sidepanel_openstreetmap_hcm.map", type:sap.ui.core.mvc.ViewType.XML});
+				var page = sap.ui.view({id:"idmap1", viewName:"sidepanel_osm.map", type:sap.ui.core.mvc.ViewType.XML});
 				app.addPage(page);
 				app.placeAt("content");
 		</script>

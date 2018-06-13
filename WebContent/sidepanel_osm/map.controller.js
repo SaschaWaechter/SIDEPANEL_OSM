@@ -2,11 +2,6 @@ sap.ui.controller("sidepanel_osm.map", {
 
 	onInit: function () {
 		 
-		 var startadress = "Karlsruhe";
-		 		 
-		 var lat;
-		 var lon;
-		 
 		  window.oGeoMap = this.getView().byId("GeoMap");
 		  window.oMapConfig = {
 			        "MapProvider": [{
@@ -37,20 +32,16 @@ sap.ui.controller("sidepanel_osm.map", {
 		  window.oGeoMap.setMapConfiguration(window.oMapConfig);
 		  window.oGeoMap.setRefMapLayerStack("DEFAULT");
 		  window.oGeoMap.setInitialZoom(8);
-		  	  
 		  $.ajax({
-			  url: "http://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURI(startadress),
+			  url: "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=Karlsruhe",
 			  encoding:"UTF-8",
 			  dataType: "json",
 			  async: false,			  
 			  success: function(json) {
-				  lat = json[0].lat;
-				  lon = json[0].lon;
+					 window.oGeoMap.setInitialPosition(json[0].lon + ";" + json[0].lat + ";0");
 			  } 
 			});
 		  
-		  window.oGeoMap.setInitialPosition(lon + ";" + lat + ";0");	 
-		  			        
 	        var dataContext;
 	        
 	        onChangedWithXML = function (eventObj){
@@ -62,14 +53,14 @@ sap.ui.controller("sidepanel_osm.map", {
 	        	
 	        	
 	        	var street = dataContext.read("/BSSP/:STREET", "CANVAS_appData", null);
-	        	var plz = dataContext.read("/BSSP/:PLZ", "CANVAS_appData", null);
-	        	var ort = dataContext.read("/BSSP/:ORT", "CANVAS_appData", null);
+	        	var plz = dataContext.read("/BSSP/:POSTCODE", "CANVAS_appData", null);
+	        	var ort = dataContext.read("/BSSP/:PLACE", "CANVAS_appData", null);
 	          	
 	          	
 	          	if( ( street != null && ort != null ) ){ 
 	          	
 	          	$.ajax({
-	  			  url: "http://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURI(street) + "+" + encodeURI(plz) + "+" + encodeURI(ort),
+	  			  url: "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURI(street) + "+" + encodeURI(plz) + "+" + encodeURI(ort),
 	  			  dataType: 'json',
 	  			  async: false,
 	  			  encoding:"UTF-8",
@@ -92,21 +83,23 @@ sap.ui.controller("sidepanel_osm.map", {
 	          	
 	          	oModel.setData(pos_dyn); 
 	          	window.oGeoMap.setModel(oModel);
-	          	window.oGeoMap.setCenterPosition(lon_dyn + ";" + lat_dyn + ";0");
+	          	window.oGeoMap.setCenterPosition(lon_dyn + ";" + lat_dyn);
 	          	window.oGeoMap.setZoomlevel(18);
 	          	
 	          	}
 	          	          	
-	        };  
+	        };
+	        
+	        if (window.external.DataContext !== undefined){
+				 window.external.epcm.subscribeEventReliable("com.sap.lsapi.dataContext", "changedWithXML", this, "OnChangedWithXML");
+			}
 	        
 	      //handle the data passed from the content area
-	        dataContext = (typeof(window.external) !== "undefined") && (typeof(window.external.DataContext) !== "undefined") ?
+	    /*dataContext = (typeof(window.external) !== "undefined") && (typeof(window.external.DataContext) !== "undefined") ?
 	       window.external.DataContext : null;
-	        
 	        if (dataContext !== null && typeof(dataContext) !== "undefined")
 	           { window.external.epcm.subscribeEventReliable("com.sap.lsapi.dataContext", "changedWithXML", undefined, "onChangedWithXML");
-	        }; 
-	        	        
-     	},	    
+	        }; */
+     	}	   
 
 });
