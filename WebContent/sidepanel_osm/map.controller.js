@@ -51,11 +51,9 @@ sap.ui.controller("sidepanel_osm.map", {
 	        	var lat_dyn;
 	        	var lon_dyn;
 	        	
-	        	
 	        	var street = dataContext.read("/BSSP/:STREET", "CANVAS_appData", null);
 	        	var plz = dataContext.read("/BSSP/:POSTCODE", "CANVAS_appData", null);
 	        	var ort = dataContext.read("/BSSP/:PLACE", "CANVAS_appData", null);
-	          	
 	          	
 	          	if( ( street != null && ort != null ) ){ 
 	          	
@@ -89,17 +87,11 @@ sap.ui.controller("sidepanel_osm.map", {
 	          	}
 	          	          	
 	        };
-	        
-	        if (window.external.DataContext !== undefined){
-				 window.external.epcm.subscribeEventReliable("com.sap.lsapi.dataContext", "changedWithXML", this, "OnChangedWithXML");
-			}
-	        
-	      //handle the data passed from the content area
-	    /*dataContext = (typeof(window.external) !== "undefined") && (typeof(window.external.DataContext) !== "undefined") ?
-	       window.external.DataContext : null;
-	        if (dataContext !== null && typeof(dataContext) !== "undefined")
-	           { window.external.epcm.subscribeEventReliable("com.sap.lsapi.dataContext", "changedWithXML", undefined, "onChangedWithXML");
-	        }; */
-     	}	   
+
+	      if (window.external.DataContext !== undefined){
+    		window.external.epcm.subscribeEventReliable("com.sap.lsapi.dataContext", "changedWithXML", this, "OnChangedWithXML");
+		  };
+		   
+	},	   
 
 });
